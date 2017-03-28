@@ -1,6 +1,7 @@
 --globals
 XRES = 500
 YRES = 500
+step = .01
 MAX_COLOR = 255
 
 --object to store color
@@ -128,7 +129,6 @@ function add_curve(x0,y0,x1,y1,x2,y2,x3,y3,t)
 	 xcoef , ycoef = coef(x0,y0,x1,y1,x2,y2,x3,y3,t)
 	 xcor0 = xcoef[4][1]
 	 ycor0 = ycoef[4][1]
-	 step = .01
 	 for t = 0, 1 ,step do
 	     xcor1 = xcoef[1][1] * t^3 + xcoef[2][1] * t^2 +xcoef[3][1] *t + xcoef[4][1]
 	     ycor1 = ycoef[1][1] * t^3 + ycoef[2][1] * t^2 +ycoef[3][1] *t + ycoef[4][1]
@@ -137,3 +137,25 @@ function add_curve(x0,y0,x1,y1,x2,y2,x3,y3,t)
 	     ycor0 = ycor1
 	 end
 end
+
+function add_box(x , y , z , width , height, depth)
+
+end
+
+function add_sphere(x , y , z , r )
+
+end
+
+function generate_sphere(x , y , z , r)
+
+end
+
+function add_torus(x , y , z , r1 , r2)
+
+end
+
+function generatea_torus(x , y , z , r1 , r2)
+
+end
+
+

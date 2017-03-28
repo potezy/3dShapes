@@ -1,4 +1,9 @@
 
+function sizeOf(matrix)
+	 local size = 0
+	 for _ in pairs(matrix) do size = size + 1 end
+	 return size
+end
 
 function string:split(sep) --credit to lua user manual
     local sep, fields = sep or ":", {}
@@ -7,6 +12,12 @@ function string:split(sep) --credit to lua user manual
     return fields
  end
 
+function make_int(matrix)
+	 for i = 1, sizeOf(matrix) do
+	     matrix[i] = tonumber(matrix[i])
+	 end
+	 return matrix
+end
 
 function parseFile(f)
 	 local lines = {}
@@ -19,41 +30,35 @@ function parseFile(f)
 	 for i = 1, s do
 	     local temp 
 	     ln = lines[i]:split(" ")
-	     --print(ln[1])
-	     --args = lines[i+1]:split(" ")
+
 	     if (ln[1] == "line") then
 	     	args = lines[i+1]:split(" ")
-		--print(args[1],args[2])
-	     	addEdge(eMatrix, tonumber(args[1]), tonumber(args[2]),tonumber(args[3]),tonumber(args[4]),tonumber(args[5]), tonumber(args[6]))
-		--print("lines working")
+	     	addEdge(eMatrix, args[1], args[2],args[3],args[4],args[5],args[6])
+	
 	     elseif (ln[1] == "ident") then
 	     	    identify(tMatrix)
-		    --print("ident working")
+	
 	     elseif (ln[1] == "scale") then
 	     	    args = lines[i+1]:split(" ")
 		    tMatrix = matrixMult(scale(args[1], args[2], args[3]), tMatrix)
-		    --print("scale working")
+	
 	     elseif (ln[1] == "move") then 
 	     	    args = lines[i+1]:split(" ")
 	     	    tMatrix = matrixMult(translate(args[1], args[2],args[3]), tMatrix)
-		    --print("move working")
+	
 	     elseif (ln[1] == "rotate") then
 	     	    args = lines[i+1]:split(" ")
 	     	    tMatrix = matrixMult(rotate(args[1], math.rad(args[2])), tMatrix)
-		    --print("rotate moving")
+		  
              elseif (ln[1] == "apply") then
-	     	    --printMatrix(tMatrix)
-		    --printMatrix(eMatrix)
 	     	    eMatrix = matrixMult(tMatrix, eMatrix)
-		    --printMatrix(eMatrix)
-
+	
 	     elseif (ln[1] == "save") then
 	     	    args = lines[i+1]:split(" ")
 		    save(board)
 		    n = args[1]
 		    os.execute("convert line.ppm " .. n) 
-		    --print("save working")
-		    --print(n)
+	
 	     elseif (ln[1] == "display") then
 	     	    clear_screen(board)
 	     	    draw(board, eMatrix)
@@ -61,16 +66,20 @@ function parseFile(f)
 	     	    local a = "display line.ppm" 
 		    print(a)
 	     	    os.execute(a) 
-		    --print("display working")
+	
 	     elseif (ln[1] == "circle") then
 	     	    args = lines[i+1]:split(" ")
-		    circle(tonumber(args[1]), tonumber(args[2]), tonumber(args[3]), tonumber(args[4]))
-		    	    	    		    	    
+		    circle(args[1], args[2], args[3], args[4])	
+	    	
 	     elseif (ln[1] == "hermite" or ln[1] == "bezier") then
-	     	    --print(1)
 	     	    args = lines[i+1]:split(" ")
-		    add_curve(tonumber(args[1]),tonumber(args[2]),tonumber(args[3]),tonumber(args[4]),tonumber(args[5]),tonumber(args[6]),tonumber(args[7]),tonumber(args[8]), ln[1])
-		    	    
+		    add_curve(args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8], ln[1])
+	     elseif (ln[1] == "sphere") then
+	     	     	    
+	     elseif (ln[1] == "torus") then
+
+	     elseif (ln[1] == "box") then
+	     
 	     end
  	 end
 end
