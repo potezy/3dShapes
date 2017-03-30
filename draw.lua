@@ -110,13 +110,14 @@ function draw(board, eMatrix)
 	     color = Color:new((x1+x2)%255, (y1+y2)%255, (x1+x2+y1+y2)%255)
 	     draw_line(x1,y1,x2,y2,color,board)
 	 end
+	 --printMatrix(eMatrix)
 end
 
-function addPoint(eMatrix, x,y,z)
-	 table.insert(eMatrix[1],x) 	 
-	 table.insert(eMatrix[2],y)
-	 table.insert(eMatrix[3],z)
-	 table.insert(eMatrix[4],1)
+function addPoint(matrix, x,y,z)
+	 table.insert(matrix[1],x) 	 
+	 table.insert(matrix[2],y)
+	 table.insert(matrix[3],z)
+	 table.insert(matrix[4],1)
 end
 
 function addEdge(pMatrix, x1,y1,z1,x2,y2,z2)
@@ -139,6 +140,7 @@ function add_curve(x0,y0,x1,y1,x2,y2,x3,y3,t)
 end
 
 function circle(cx , cy , cz , r)
+	 print("potato")
 	 local step = .01
 	 local xcor, ycor, xcor0, ycor0
 	 xcor0 = r + cx --first point
@@ -165,21 +167,57 @@ function add_box(x , y , z , width , height, depth)
 	 addEdge(eMatrix, x+width, y-height,z-depth,x+width,y-height,z-depth)
 end
 
-function add_sphere(x , y , z , r )
-	 
+function add_sphere(cx , cy , cz , r )
+	 local sphere_points, x , y , z
+	 sphere_points = generate_sphere(cx,cy,cz,r)
+	 --print(sizeOf(sphere_points[1]))
+	 for i = 1, sizeOf(sphere_points[1]) do
+	     x = sphere_points[1][i]
+	     y = sphere_points[2][i]
+	     z = sphere_points[3][i]
+	     --print(x,y,z)
+	     addEdge(eMatrix, x,y,z,x,y,z)
+	 end
+end
+function generate_sphere(cx , cy , cz , r)
+         local rot,circ,x,y,z, point_matrix
+         point_matrix = makeMatrix(4,4)
+         for rot = 0, 1 + step, step do
+             for circ = 0, 1 +step, step do
+                 x = r * cos(circ * pi) + cx
+                 y = r * sin(circ * pi) * cos(rot * 2 * pi) + cy
+                 z = r * sin(circ * pi) * sin(rot * 2 * pi) + cz
+                 addPoint(point_matrix, x,y,z)
+             end
+         end
+         return point_matrix
 end
 
-function generate_sphere(x , y , z , r)
-	 local rot,circle,xcor0,xcor1,ycor0,ycor1
-	 
+
+
+function add_torus(cx , cy , cz , r1 , r2)
+	 local x ,y,z,points
+	 points  = generate_torus(cx,cy,cz,r1,r2)
+	 for i = 1, sizeOf(points[1]) do
+	     x = points[1][i]
+	     y = points[2][i]
+	     z = points[3][i]
+	     addEdge(eMatrix,x,y,z,x,y,z)
+	 end
 end
 
-function add_torus(x , y , z , r1 , r2)
-
-end
-
-function generate_torus(x , y , z , r1 , r2)
-
+function generate_torus(cx , cy , cz , r1 , r2)
+	 local rot,circ,x,y,z, torus_points
+	 torus_points = makeMatrix(4,4)
+	 for rot = 0, 1 + step, step do
+	     for circ = 0, 1 + step, step do
+	     	 x = cos(rot * 2 * pi) * (r1 * cos(circ * 2 * pi) + r2) + cx
+		 y = r1 * sin(circ * 2 * pi) + cy
+		 z = -1 * sin(rot * 2 * pi) * (r1 * cos(circ * 2 * pi) + r2) + cz
+		 addPoint(torus_points, x ,y ,z)
+	      end
+	 end
+	 return torus_points
 end
 
 

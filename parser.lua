@@ -77,9 +77,14 @@ function parseFile(f)
 
 	     elseif (ln[1] == "clear") then
 	     	    eMatrix = {{},{},{},{}}
+
 	     elseif (ln[1] == "sphere") then
-	     	     	    
+	     	    args = lines[i+1]:split(" ")
+		    add_sphere(args[1],args[2],args[3],args[4])
+
 	     elseif (ln[1] == "torus") then
+	     	    args = lines[i+1]:split(" ")
+		    add_torus(args[1],args[2],args[3],args[4],args[5])	     	    
 
 	     elseif (ln[1] == "box") then
 	     	    args = lines[i+1]:split(" ")
