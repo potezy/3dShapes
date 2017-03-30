@@ -49,7 +49,7 @@ function parseFile(f)
 	     elseif (ln[1] == "rotate") then
 	     	    args = lines[i+1]:split(" ")
 	     	    tMatrix = matrixMult(rotate(args[1], math.rad(args[2])), tMatrix)
-		  
+		   		  
              elseif (ln[1] == "apply") then
 	     	    eMatrix = matrixMult(tMatrix, eMatrix)
 	
@@ -74,12 +74,16 @@ function parseFile(f)
 	     elseif (ln[1] == "hermite" or ln[1] == "bezier") then
 	     	    args = lines[i+1]:split(" ")
 		    add_curve(args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8], ln[1])
+
+	     elseif (ln[1] == "clear") then
+	     	    eMatrix = {{},{},{},{}}
 	     elseif (ln[1] == "sphere") then
 	     	     	    
 	     elseif (ln[1] == "torus") then
 
 	     elseif (ln[1] == "box") then
-	     
+	     	    args = lines[i+1]:split(" ")
+		    add_box(args[1],args[2],args[3],args[4],args[5],args[6])
 	     end
  	 end
 end

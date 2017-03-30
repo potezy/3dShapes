@@ -111,21 +111,6 @@ function scale(x,y,z)
 	 return temp
 end
 
-function circle(cx , cy , cz , r)
-	 local step = .01
-	 local xcor, ycor, xcor0, ycor0
-	 xcor0 = r + cx --first point
-	 ycor0 = cy     --first point
-	 for t = 0, 1+step, step do
-	     theta = 2 * pi * t
-	     xcor1 = r * cos(theta) + cx
-	     ycor1 = r * sin(theta) + cy
-	     addEdge(eMatrix, xcor0 , ycor0 , 0 , xcor1 , ycor1, 0)
-	     ycor0 = ycor1
-	     xcor0 = xcor1
-	 end
-	 
-end
 
 function hermiteMatrix()
 	 local hMatrix = {{2,-2,1,1},{-3,3,-2,-1},{0,0,1,0},{1,0,0,0}}

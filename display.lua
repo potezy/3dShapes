@@ -12,10 +12,11 @@ end
 function plot(s , c , x , y)
 	 local newy =  x 
 	 local newx = YRES - y -1 
+	 --if(newy<0 or newx<0 or newy > YRES or newx > XRES) then print(newx , newy) end
 	 --print(newx,newy)
 	 --x = math.abs(x - XRES)
 	 --print(x,y)
-	 if(newx >=0 and x<XRES and newy >=0 and newy<YRES) then
+	 if(newx >0 and newx<XRES and newy >0 and newy<YRES) then
 	      s[newx][newy].red = c.red
 	      s[newx][newy].green = c.green
 	      s[newx][newy].blue = c.blue

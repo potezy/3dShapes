@@ -138,23 +138,47 @@ function add_curve(x0,y0,x1,y1,x2,y2,x3,y3,t)
 	 end
 end
 
-function add_box(x , y , z , width , height, depth)
+function circle(cx , cy , cz , r)
+	 local step = .01
+	 local xcor, ycor, xcor0, ycor0
+	 xcor0 = r + cx --first point
+	 ycor0 = cy     --first point
+	 for t = 0, 1+step, step do
+	     theta = 2 * pi * t
+	     xcor1 = r * cos(theta) + cx
+	     ycor1 = r * sin(theta) + cy
+	     addEdge(eMatrix, xcor0 , ycor0 , 0 , xcor1 , ycor1, 0)
+	     ycor0 = ycor1
+	     xcor0 = xcor1
+	 end
+	 
+end
 
+function add_box(x , y , z , width , height, depth)
+	 addEdge(eMatrix, x, y, z, x, y, z)--upper left
+	 addEdge(eMatrix, x+width, y, z, x+width, y, z)--upper right
+	 addEdge(eMatrix, x, y-height, z, x, y-height, z)--lower left
+	 addEdge(eMatrix, x+width, y-height, z, x+width, y-height, z)--lower right
+	 addEdge(eMatrix, x, y, z-depth, x, y, z-depth)
+	 addEdge(eMatrix, x+width, y, z-depth, x+width, y, z-depth)
+	 addEdge(eMatrix, x, y-height,z-depth,x,y-height,z-depth)
+	 addEdge(eMatrix, x+width, y-height,z-depth,x+width,y-height,z-depth)
 end
 
 function add_sphere(x , y , z , r )
-
+	 
 end
 
 function generate_sphere(x , y , z , r)
-
+	 local rot,circle,xcor0,xcor1,ycor0,ycor1
+	 
 end
 
 function add_torus(x , y , z , r1 , r2)
 
 end
 
-function generatea_torus(x , y , z , r1 , r2)
+function generate_torus(x , y , z , r1 , r2)
 
 end
 
